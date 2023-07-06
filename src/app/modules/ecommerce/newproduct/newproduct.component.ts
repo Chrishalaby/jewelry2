@@ -1,90 +1,116 @@
-import { Component, ViewChildren, QueryList, ElementRef } from '@angular/core';
-
+import { CommonModule } from '@angular/common';
+import { Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { ChipModule } from 'primeng/chip';
+import { DropdownModule } from 'primeng/dropdown';
+import { EditorModule } from 'primeng/editor';
+import { FileUploadModule } from 'primeng/fileupload';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { InputTextModule } from 'primeng/inputtext';
+import { RippleModule } from 'primeng/ripple';
 interface Product {
-    name: string;
-    price: string;
-    code: string;
-    sku: string;
-    status: string;
-    tags: string[];
-    category: string;
-    colors: string[];
-    stock: string;
-    inStock: boolean;
-    description: string;
-    images: Image[];
+  name: string;
+  price: string;
+  code: string;
+  sku: string;
+  status: string;
+  tags: string[];
+  category: string;
+  colors: string[];
+  stock: string;
+  inStock: boolean;
+  description: string;
+  images: Image[];
 }
 
 interface Image {
-    name: string;
-    objectURL: string;
+  name: string;
+  objectURL: string;
 }
 
 @Component({
-    templateUrl: './newproduct.component.html',
-    styleUrls: ['./newproduct.component.scss']
+  templateUrl: './newproduct.component.html',
+  styleUrls: ['./newproduct.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    InputTextModule,
+    ChipModule,
+    DropdownModule,
+    FormsModule,
+    FileUploadModule,
+    ButtonModule,
+    RippleModule,
+    InputSwitchModule,
+    EditorModule,
+  ],
 })
 export class NewProductComponent {
+  @ViewChildren('buttonEl') buttonEl!: QueryList<ElementRef>;
 
-    @ViewChildren('buttonEl') buttonEl!: QueryList<ElementRef>;
+  text: string = '';
 
-    text: string = '';
+  categoryOptions = ['Sneakers', 'Apparel', 'Socks'];
 
-    categoryOptions = ['Sneakers', 'Apparel', 'Socks'];
+  colorOptions: any[] = [
+    { name: 'Black', background: 'bg-gray-900' },
+    { name: 'Orange', background: 'bg-orange-500' },
+    { name: 'Navy', background: 'bg-blue-500' },
+  ];
 
-    colorOptions: any[] = [
-        { name: 'Black', background: "bg-gray-900" },
-        { name: 'Orange', background: "bg-orange-500" },
-        { name: 'Navy', background: "bg-blue-500" }
-    ];
+  product: Product = {
+    name: '',
+    price: '',
+    code: '',
+    sku: '',
+    status: 'Draft',
+    tags: ['Nike', 'Sneaker'],
+    category: 'Sneakers',
+    colors: ['Blue'],
+    stock: 'Sneakers',
+    inStock: true,
+    description: '',
+    images: [],
+  };
 
-    product: Product = {
-        name: '',
-        price: '',
-        code: '',
-        sku: '',
-        status: 'Draft',
-        tags: ['Nike', 'Sneaker'],
-        category: 'Sneakers',
-        colors: ['Blue'],
-        stock: 'Sneakers',
-        inStock: true,
-        description: '',
-        images: []
-    };
+  uploadedFiles: any[] = [];
 
-    uploadedFiles: any[] = [];
+  showRemove: boolean = false;
 
-    showRemove: boolean = false;
+  onChipRemove(item: string) {
+    this.product.tags = this.product.tags.filter((i) => i !== item);
+  }
 
-    onChipRemove(item: string) {
-        this.product.tags = this.product.tags.filter(i => i !== item);
+  onColorSelect(color: string) {
+    this.product.colors.indexOf(color) == -1
+      ? this.product.colors.push(color)
+      : this.product.colors.splice(this.product.colors.indexOf(color), 1);
+  }
+
+  onUpload(event: any) {
+    for (let file of event.files) {
+      this.product.images.push(file);
     }
+  }
 
-    onColorSelect(color: string) {
-        this.product.colors.indexOf(color) == -1 ? this.product.colors.push(color) : this.product.colors.splice(this.product.colors.indexOf(color), 1);
-    }
+  onImageMouseOver(file: Image) {
+    this.buttonEl.toArray().forEach((el) => {
+      el.nativeElement.id === file.name
+        ? (el.nativeElement.style.display = 'flex')
+        : null;
+    });
+  }
 
-    onUpload(event: any) {
-        for (let file of event.files) {
-            this.product.images.push(file);
-        }
-    }
+  onImageMouseLeave(file: Image) {
+    this.buttonEl.toArray().forEach((el) => {
+      el.nativeElement.id === file.name
+        ? (el.nativeElement.style.display = 'none')
+        : null;
+    });
+  }
 
-    onImageMouseOver(file: Image) {
-        this.buttonEl.toArray().forEach(el => {
-            el.nativeElement.id === file.name ? el.nativeElement.style.display = 'flex' : null;
-        })
-    }
-
-    onImageMouseLeave(file: Image) {
-        this.buttonEl.toArray().forEach(el => {
-            el.nativeElement.id === file.name ? el.nativeElement.style.display = 'none' : null;
-        })
-    }
-
-    removeImage(file: Image) {
-        this.product.images = this.product.images.filter(i => i !== file);
-    }
-
+  removeImage(file: Image) {
+    this.product.images = this.product.images.filter((i) => i !== file);
+  }
 }
