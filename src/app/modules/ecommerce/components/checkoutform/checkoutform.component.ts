@@ -8,10 +8,10 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 @Component({
+  selector: 'app-checkout-form',
   templateUrl: './checkoutform.component.html',
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     CheckboxModule,
     DropdownModule,
@@ -19,6 +19,7 @@ import { RippleModule } from 'primeng/ripple';
     InputNumberModule,
     ButtonModule,
     RippleModule,
+    CommonModule,
   ],
 })
 export class CheckoutFormComponent {
