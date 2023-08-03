@@ -1,7 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppLayoutComponent } from './layout/app.layout.component';
-import { ModuleRoutes, ShopRoutes } from './shared/enums/routes.enum';
+import {
+  ModuleRoutes,
+  ShopRoutes,
+  SizesRoutes,
+} from './shared/enums/routes.enum';
 import { LoadedComponent } from './shared/types/general.types';
 
 const routes: Routes = [
@@ -69,6 +73,25 @@ const routes: Routes = [
               ).then((x: LoadedComponent) => x.ShoppingCartComponent),
           },
         ],
+      },
+      {
+        path: ModuleRoutes.Sizes,
+        children: [
+          {
+            path: SizesRoutes.RingSize,
+            loadComponent: () =>
+              import('./modules/sizes/ring-size/ring-size.component').then(
+                (x: LoadedComponent) => x.RingSizeComponent
+              ),
+          },
+        ],
+      },
+      {
+        path: ModuleRoutes.Home,
+        loadComponent: () =>
+          import('./modules/home-page/home-page.component').then(
+            (x: LoadedComponent) => x.HomePageComponent
+          ),
       },
     ],
   },

@@ -15,6 +15,17 @@ export class AppMenuComponent implements OnInit {
         routerLink: ['/'],
       },
       {
+        label: 'Sizes',
+        icon: 'pi pi-fw pi-pencil',
+        items: [
+          {
+            label: 'Ring Size',
+            icon: 'pi pi-fw pi-plus',
+            routerLink: ['sizes/ring-size'],
+          },
+        ],
+      },
+      {
         label: 'E-Commerce',
         icon: 'pi pi-fw pi-wallet',
         items: [

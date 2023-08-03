@@ -4,6 +4,7 @@ export enum ModuleRoutes {
   Contact = 'contact',
   NotFound = '404',
   Shop = 'shop',
+  Sizes = 'sizes',
 }
 
 export enum ShopRoutes {
@@ -15,4 +16,9 @@ export enum ShopRoutes {
   ProductList = 'product-list',
   ProductOverview = 'product-overview',
   Cart = 'shopping-cart',
+}
+
+export enum SizesRoutes {
+  Empty = '',
+  RingSize = 'ring-size',
 }

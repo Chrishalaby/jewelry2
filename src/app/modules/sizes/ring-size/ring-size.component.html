@@ -1,0 +1,51 @@
+<section class="card">
+  <div class="grid">
+    <div class="col-12 field">
+      <h5>How to Measure Your Ring Size with String</h5>
+      <ul>
+        <li>
+          Take a length of floss or string and wrap it around the base of your
+          finger.
+        </li>
+        <li>Mark where the floss or string first overlaps with a pen.</li>
+        <li>
+          Stretch the length of string out along a ruler or measuring tape, and
+          take down the length in millimeters.
+        </li>
+        <li>
+          Use the ring size chart below to compare your measurement to the
+          standard ring sizes.
+        </li>
+      </ul>
+    </div>
+    <div class="col-12">
+      <span class="col-12 grid">
+        <p-dropdown
+          class="col-4 mt-4 text-left md:text-center"
+          [options]="rengions"
+          optionLabel="label"
+          optionValue="value"
+          (onChange)="onSelectedChange($event)"
+        >
+        </p-dropdown>
+        <h5 class="col-4 text-center md:text-center">Inside Circum. (mm)</h5>
+        <h5 class="col-4 text-right md:text-center">String Length (mm)</h5>
+      </span>
+      <div *ngFor="let size of sizes" class="col-12 grid">
+        <p class="col-4 tet-left md:text-center">
+          {{ size[selectedRengionValue] }}
+        </p>
+        <p class="col-4 text-center md:text-center">{{ size.M }}</p>
+        <p class="col-4 text-right md:text-center">{{ size.stringSize }}</p>
+      </div>
+    </div>
+    <p-accordion>
+      <p-accordionTab
+        *ngFor="let question of items.questions"
+        [header]="question.Q"
+      >
+        <p>{{ question.A }}</p>
+      </p-accordionTab>
+    </p-accordion>
+  </div>
+</section>
